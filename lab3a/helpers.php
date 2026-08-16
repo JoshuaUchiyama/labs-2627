@@ -1,21 +1,23 @@
 <?php
 
-define('MAX_QUESTION_NUMBER', 50);
+define('MAX_QUESTION_NUMBER', 5);
 
 function retrieve_questions() {
-    // 1. Open the questions/triviaquiz.json file
+    // Open the questions/triviaquiz.json file
     $json_string = file_get_contents("./questions/triviaquiz.json");
-    
-    // 2. Convert it the array
+
+    // Convert JSON into an associative array
     $json_data = json_decode($json_string, true);
-    
-    // 3. Return the trivia questions array data
+
+    // Return the trivia questions array
     return $json_data;
 }
 
 function get_current_question($answers = '') {
     $number_of_answers = strlen($answers);
+
     $questions = retrieve_questions();
+
     return $questions['questions'][$number_of_answers];
 }
 
@@ -25,23 +27,35 @@ function get_current_question_number($answers = '') {
 
 function get_options_for_question_number($number = 0) {
     $questions = retrieve_questions();
+
     return $questions['questions'][$number - 1]['options'];
 }
 
 function compute_score($answers = []) {
+
     $questions = retrieve_questions();
+
     $correct_answers = $questions['answers'];
 
     $score = 0;
+
     for ($i = 0; $i < MAX_QUESTION_NUMBER; $i++) {
-        if ($correct_answers[$i] == $answers[$i]) {
-            $score += 100;
+
+        if (
+            isset($answers[$i]) &&
+            $correct_answers[$i] == $answers[$i]
+        ) {
+            $score++;
         }
+
     }
+
     return $score;
 }
 
 function get_answers() {
+
     $questions = retrieve_questions();
+
     return $questions['answers'];
 }

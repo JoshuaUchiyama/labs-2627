@@ -1,63 +1,165 @@
 <?php
-# from the $_SERVER global variable, check if the HTTP method used is POST, if its not POST, redirect to the index.php page
-# Reference: https://www.php.net/manual/en/reserved.variables.server.php
 
-// Supply the missing code
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header('Location: index.php');
+    exit;
 }
 
-// Supply the missing code
 $complete_name = $_POST['complete_name'];
 $email = $_POST['email'];
 $birthdate = $_POST['birthdate'];
 $contact_number = $_POST['contact_number'];
+
+$name_parts = explode(" ", trim($complete_name));
+$first_name = $name_parts[0];
+
 ?>
+
 <html>
+
 <head>
     <meta charset="utf-8">
+
     <title>IPT10 Laboratory Activity #3A</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
 </head>
+
 <body>
+
 <section class="section">
-    <h1 class="title">Instructions</h1>
+
+<div class="container">
+
+    <h1 class="title">
+        Hello <?php echo htmlspecialchars($first_name); ?>,
+        please read the instructions first
+    </h1>
+
     <h2 class="subtitle">
         This is the IPT10 PHP Quiz Web Application Laboratory Activity.
     </h2>
 
-    <!-- Supply the correct HTTP method and target form handler resource -->
-    <form method="POST" action="">
-        <input type="hidden" value="<?php echo $complete_name; ?>" />
-        <input type="hidden" value="<?php echo $email; ?>" />
-        <input type="hidden" value="<?php echo $birthdate; ?>" />
-        <input type="hidden" value="<?php echo $contact_number; ?>" />
+    <form method="POST" action="quiz.php">
 
-        <!-- Display the instruction -->
-        <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
+        <!-- Hidden registration information -->
 
-        <div class="field">
-            <label class="label">Terms and conditions</label>
-            <div class="control">
-                <textarea class="textarea" placeholder="Textarea">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
-            </div>
+        <input type="hidden"
+               name="complete_name"
+               value="<?php echo htmlspecialchars($complete_name); ?>">
+
+        <input type="hidden"
+               name="email"
+               value="<?php echo htmlspecialchars($email); ?>">
+
+        <input type="hidden"
+               name="birthdate"
+               value="<?php echo htmlspecialchars($birthdate); ?>">
+
+        <input type="hidden"
+               name="contact_number"
+               value="<?php echo htmlspecialchars($contact_number); ?>">
+
+
+        <!-- Quiz instructions -->
+
+        <div class="box">
+
+            <p>
+                Please read the following instructions carefully before
+                starting the quiz.
+            </p>
+
+            <br>
+
+            <p>
+                Answer all questions to the best of your ability.
+                You will have 60 seconds to complete the quiz.
+            </p>
+
         </div>
 
+
+        <!-- Terms and conditions -->
+
         <div class="field">
+
+            <label class="label">
+                Terms and conditions
+            </label>
+
             <div class="control">
+
+                <textarea
+                    class="textarea"
+                    readonly>By starting the quiz, you agree to answer the questions honestly and understand that your answers will be submitted for evaluation.</textarea>
+
+            </div>
+
+        </div>
+
+
+        <!-- Agreement -->
+
+        <div class="field">
+
+            <div class="control">
+
                 <label class="checkbox">
-                <input type="checkbox" name="disagree">
-                I agree to the <a href="#">terms and conditions</a>
+
+                    <input
+                        type="checkbox"
+                        id="agree"
+                        name="agree"
+                        value="1">
+
+                    I agree to the
+                    <a href="#">terms and conditions</a>
+
                 </label>
+
             </div>
+
         </div>
 
-        <!-- Start Quiz button -->
-        <button type="submit" class="button is-link">Start Quiz</button>
+
+        <!-- Start Quiz -->
+
+        <button
+            id="startQuiz"
+            type="submit"
+            class="button is-link"
+            disabled>
+
+            Start Quiz
+
+        </button>
+
     </form>
+
+</div>
+
 </section>
 
+
+<script>
+
+const agree =
+    document.getElementById("agree");
+
+const startQuiz =
+    document.getElementById("startQuiz");
+
+agree.addEventListener("change", function () {
+
+    startQuiz.disabled =
+        !agree.checked;
+
+});
+
+</script>
+
 </body>
+
 </html>
