@@ -9,23 +9,23 @@ if (!file_exists($upload_directory)) {
 }
 
 // Check if a file was uploaded
-if (isset($_FILES['pdf_file'])) {
+if (isset($_FILES['audio_file'])) {
 
-    $file_name = $_FILES['pdf_file']['name'];
-    $temporary_file = $_FILES['pdf_file']['tmp_name'];
+    $file_name = $_FILES['audio_file']['name'];
+    $temporary_file = $_FILES['audio_file']['tmp_name'];
 
-    // Get the original file extension
+    // Get the file extension
     $file_extension = strtolower(
         pathinfo($file_name, PATHINFO_EXTENSION)
     );
 
-    // Only allow PDF files
-    if ($file_extension !== 'pdf') {
-        die('Only PDF files are allowed.');
+    // Only allow MP3 files
+    if ($file_extension !== 'mp3') {
+        die('Only MP3 files are allowed.');
     }
 
-    // Create a unique file name so existing files are not overwritten
-    $new_file_name = uniqid('pdf_', true) . '.pdf';
+    // Create a unique filename
+    $new_file_name = uniqid('audio_', true) . '.mp3';
 
     $uploaded_file = $upload_directory . $new_file_name;
     $relative_file = $relative_path . $new_file_name;
@@ -33,18 +33,17 @@ if (isset($_FILES['pdf_file'])) {
     // Move the uploaded file
     if (move_uploaded_file($temporary_file, $uploaded_file)) {
 
-        echo '<h2>PDF uploaded successfully!</h2>';
+        echo '<h2>Audio uploaded successfully!</h2>';
 
         echo '<p>Uploaded file: '
             . htmlspecialchars($file_name)
             . '</p>';
 
-        // Display the PDF
-        echo '<iframe
-                src="' . htmlspecialchars($relative_file) . '"
-                width="100%"
-                height="700px">
-              </iframe>';
+        // Display the audio player
+        echo '<audio controls>
+                <source src="' . htmlspecialchars($relative_file) . '" type="audio/mpeg">
+                Your browser does not support the audio element.
+              </audio>';
 
     } else {
 

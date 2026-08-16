@@ -2,8 +2,12 @@
 <head>
     <meta charset="utf-8">
     <title>IPT10 Laboratory Activity #3B</title>
-    <link rel="icon" href="https://phpsandbox.io/assets/img/brand/phpsandbox.png">
-    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla-framework-version-4.15.0.min.css" />   
+
+    <link rel="icon"
+          href="https://phpsandbox.io/assets/img/brand/phpsandbox.png">
+
+    <link rel="stylesheet"
+          href="https://assets.ubuntu.com/v1/vanilla-framework-version-4.15.0.min.css">
 </head>
 
 <body style="background-color: pink;">
@@ -34,7 +38,7 @@
 
     <div class="col">
 
-        <h4>PDF File Upload</h4>
+        <h4>Audio File Upload</h4>
 
         <form
             method="POST"
@@ -43,24 +47,23 @@
 
             <div class="p-card">
 
-                <h3>PDF File</h3>
+                <h3>MP3 File</h3>
 
                 <p class="p-card__content">
 
                     <input
                         type="file"
-                        name="pdf_file"
-                        accept=".pdf">
+                        name="audio_file"
+                        accept=".mp3">
 
                 </p>
 
             </div>
 
-
             <div>
 
                 <button type="submit">
-                    Upload PDF
+                    Upload MP3
                 </button>
 
             </div>
